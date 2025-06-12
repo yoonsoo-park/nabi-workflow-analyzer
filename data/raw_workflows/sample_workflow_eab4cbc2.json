@@ -1,0 +1,87 @@
+{
+  "name": "Simple Linear Workflow #23_c85b1e54",
+  "id": "4e04d304-1605-49cd-81c2-f2904d1cf1f5",
+  "active": true,
+  "nodes": [
+    {
+      "id": "Start_c85b1e54",
+      "name": "Start Trigger 23",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        45,
+        93
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "SetData_c85b1e54",
+      "name": "Set Some Info 23",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1.2,
+      "position": [
+        250,
+        98
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "message",
+              "value": "Hello from n8n! (wf 23)"
+            }
+          ]
+        },
+        "keepOnlySet": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "LogOutput_c85b1e54",
+      "name": "Log Message 23",
+      "type": "n8n-nodes-base.logMessage",
+      "typeVersion": 1,
+      "position": [
+        450,
+        99
+      ],
+      "parameters": {
+        "message": "={{$json.message}}",
+        "logLevel": "notice"
+      }
+    }
+  ],
+  "connections": {
+    "Start_c85b1e54": {
+      "main": [
+        [
+          {
+            "node": "SetData_c85b1e54",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "SetData_c85b1e54": {
+      "main": [
+        [
+          {
+            "node": "LogOutput_c85b1e54",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    {
+      "name": "tag_3"
+    },
+    {
+      "name": "generated_sample"
+    }
+  ]
+}

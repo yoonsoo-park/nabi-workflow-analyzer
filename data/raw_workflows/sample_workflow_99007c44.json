@@ -1,0 +1,176 @@
+{
+  "name": "Basic Conditional Workflow #8_50d8ce31",
+  "id": "9a23a4a1-81ee-42c9-9b12-89c050a1f66d",
+  "active": true,
+  "nodes": [
+    {
+      "id": "Start_50d8ce31",
+      "name": "Start 8",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        52,
+        206
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "IfCondition_50d8ce31",
+      "name": "Check Condition 8",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        251,
+        191
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json.input_value}}",
+              "operation": "equal",
+              "value2": "true"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "SetTrue_50d8ce31",
+      "name": "Path A Data 8",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1.2,
+      "position": [
+        448,
+        109
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "branch_result",
+              "value": "Took Path A (wf 8)"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "SetFalse_50d8ce31",
+      "name": "Path B Data 8",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1.2,
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "branch_result",
+              "value": "Took Path B (wf 8)"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "MergePaths_50d8ce31",
+      "name": "Merge Branches 8",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1.2,
+      "position": [
+        652,
+        207
+      ],
+      "parameters": {
+        "mode": "append"
+      }
+    },
+    {
+      "id": "LogResult_50d8ce31",
+      "name": "Log Final 8",
+      "type": "n8n-nodes-base.logMessage",
+      "typeVersion": 1,
+      "position": [
+        842,
+        206
+      ],
+      "parameters": {
+        "message": "Result: {{$json.branch_result}}"
+      }
+    }
+  ],
+  "connections": {
+    "Start_50d8ce31": {
+      "main": [
+        [
+          {
+            "node": "IfCondition_50d8ce31",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "IfCondition_50d8ce31": {
+      "0": [
+        [
+          {
+            "node": "SetTrue_50d8ce31",
+            "type": "main"
+          }
+        ]
+      ],
+      "1": [
+        [
+          {
+            "node": "SetFalse_50d8ce31",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "SetTrue_50d8ce31": {
+      "main": [
+        [
+          {
+            "node": "MergePaths_50d8ce31",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "SetFalse_50d8ce31": {
+      "main": [
+        [
+          {
+            "node": "MergePaths_50d8ce31",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "MergePaths_50d8ce31": {
+      "main": [
+        [
+          {
+            "node": "LogResult_50d8ce31",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    {
+      "name": "tag_2"
+    },
+    {
+      "name": "generated_sample"
+    }
+  ]
+}

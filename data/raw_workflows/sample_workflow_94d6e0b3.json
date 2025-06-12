@@ -1,0 +1,87 @@
+{
+  "name": "Simple Linear Workflow #15_dc20ffe3",
+  "id": "48fb5e55-f68c-4ca1-ad19-73a8102eb22a",
+  "active": true,
+  "nodes": [
+    {
+      "id": "Start_dc20ffe3",
+      "name": "Start Trigger 15",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        43,
+        105
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "SetData_dc20ffe3",
+      "name": "Set Some Info 15",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        105
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "message",
+              "value": "Hello from n8n! (wf 15)"
+            }
+          ]
+        },
+        "keepOnlySet": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "LogOutput_dc20ffe3",
+      "name": "Log Message 15",
+      "type": "n8n-nodes-base.logMessage",
+      "typeVersion": 1,
+      "position": [
+        445,
+        110
+      ],
+      "parameters": {
+        "message": "={{$json.message}}",
+        "logLevel": "notice"
+      }
+    }
+  ],
+  "connections": {
+    "Start_dc20ffe3": {
+      "main": [
+        [
+          {
+            "node": "SetData_dc20ffe3",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "SetData_dc20ffe3": {
+      "main": [
+        [
+          {
+            "node": "LogOutput_dc20ffe3",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    {
+      "name": "tag_1"
+    },
+    {
+      "name": "generated_sample"
+    }
+  ]
+}

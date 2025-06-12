@@ -1,0 +1,68 @@
+# docker-compose.yml for n8n-workflow-analyzer
+
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: n8n_analyzer_app
+    ports:
+      - "5000:5000" # Map host port 5000 to container port 5000 (Flask default)
+    volumes:
+      - ./n8n_analyzer:/app/n8n_analyzer # Mount local code for development
+      - ./config:/app/config
+      # - ./data:/app/data # If app needs to access local data files directly
+    environment:
+      # Flask specific (if using `flask run` directly and app is discoverable)
+      - FLASK_APP=n8n_analyzer.api.app # Placeholder: Adjust to actual Flask app entry point
+      - FLASK_ENV=development # Or production
+      - FLASK_DEBUG=1 # For development
+
+      # Database configuration (points to the 'db' service)
+      - DATABASE_URL=postgresql://n8n_user:n8n_password@db:5432/n8n_db
+      # For psycopg2, you might need to break it down:
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=n8n_user
+      - POSTGRES_PASSWORD=n8n_password
+      - POSTGRES_DB=n8n_db
+
+      # Redis configuration (points to the 'redis' service)
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD= # No password by default for Redis image
+      - REDIS_DB=0
+
+      # Other application-specific environment variables
+      # - API_KEY=your_api_key
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+
+  db:
+    image: postgres:14-alpine
+    container_name: n8n_analyzer_db
+    environment:
+      - POSTGRES_USER=n8n_user
+      - POSTGRES_PASSWORD=n8n_password
+      - POSTGRES_DB=n8n_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Persist database data
+      - ./scripts/setup_db.sql:/docker-entrypoint-initdb.d/init.sql # Run init script
+    ports:
+      - "5432:5432" # Map host port 5432 to container port 5432
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: n8n_analyzer_redis
+    ports:
+      - "6379:6379" # Map host port 6379 to container port 6379
+    volumes:
+      - redis_data:/data # Persist Redis data
+    restart: unless-stopped
+
+volumes:
+  postgres_data: # Named volume for PostgreSQL data
+  redis_data:    # Named volume for Redis data
