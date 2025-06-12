@@ -1,0 +1,454 @@
+{
+  "name": "Data Processing Pipeline - Email-Marketing 74",
+  "id": "workflow_0074",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        613,
+        395
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "SET_1",
+      "name": "Set 1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        60,
+        370
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "timestamp",
+              "value": "pending"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "HTTPREQUEST_2",
+      "name": "HTTP Request 2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [
+        262,
+        535
+      ],
+      "parameters": {
+        "url": "https:\/\/api.openweathermap.org\/data\/2.5\/weather",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "SLACK_3",
+      "name": "Slack 3",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        566,
+        235
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "EMAILSEND_4",
+      "name": "Send Email 4",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        142,
+        144
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "IF_5",
+      "name": "IF 5",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        275,
+        528
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "FUNCTION_6",
+      "name": "Function 6",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        306,
+        86
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "GOOGLESHEETS_7",
+      "name": "Google Sheets 7",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 1,
+      "position": [
+        364,
+        550
+      ],
+      "parameters": {
+        "operation": "append",
+        "sheetId": "1234567890",
+        "values": {
+          "A": "={{ $json.name }}",
+          "B": "={{ $json.email }}"
+        }
+      }
+    },
+    {
+      "id": "WAIT_8",
+      "name": "Wait 8",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        512,
+        529
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "EMAILSEND_9",
+      "name": "Send Email 9",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        584,
+        481
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "IF_10",
+      "name": "IF 10",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        388,
+        244
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "HTTPREQUEST_11",
+      "name": "HTTP Request 11",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        471,
+        409
+      ],
+      "parameters": {
+        "url": "https:\/\/reqres.in\/api\/users",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "SET_12",
+      "name": "Set 12",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        757,
+        433
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "timestamp",
+              "value": "pending"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "EMAILSEND_13",
+      "name": "Send Email 13",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        398,
+        312
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "WEBHOOK_14",
+      "name": "Webhook 14",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        454,
+        526
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "SET_15",
+      "name": "Set 15",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        324,
+        580
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "timestamp",
+              "value": "pending"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "SET_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_1": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_2": {
+      "main": [
+        [
+          {
+            "node": "SLACK_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_3": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_4": {
+      "main": [
+        [
+          {
+            "node": "IF_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_5": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_6": {
+      "main": [
+        [
+          {
+            "node": "GOOGLESHEETS_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GOOGLESHEETS_7": {
+      "main": [
+        [
+          {
+            "node": "WAIT_8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT_8": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_9": {
+      "main": [
+        [
+          {
+            "node": "IF_10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_10": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_11": {
+      "main": [
+        [
+          {
+            "node": "SET_12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_12": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_13": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WEBHOOK_14": {
+      "main": [
+        [
+          {
+            "node": "SET_15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "email-marketing",
+    "complexity": "complex",
+    "pattern": "data_pipeline"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "Asia\/Tokyo"
+  },
+  "meta": {
+    "created": "2024-12-03",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

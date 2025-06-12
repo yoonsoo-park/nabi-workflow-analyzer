@@ -1,0 +1,208 @@
+{
+  "name": "Complex Multi-Branch - Database-Sync 76",
+  "id": "workflow_0076",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        183,
+        394
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "WEBHOOK_1",
+      "name": "Webhook 1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        558,
+        431
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "START_2",
+      "name": "Start 2",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        445,
+        75
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "START_3",
+      "name": "Start 3",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        545,
+        379
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "GOOGLESHEETS_4",
+      "name": "Google Sheets 4",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 1,
+      "position": [
+        698,
+        162
+      ],
+      "parameters": {
+        "operation": "append",
+        "sheetId": "1234567890",
+        "values": {
+          "A": "={{ $json.name }}",
+          "B": "={{ $json.email }}"
+        }
+      }
+    },
+    {
+      "id": "FUNCTION_5",
+      "name": "Function 5",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        516,
+        66
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "IF_6",
+      "name": "IF 6",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        475,
+        166
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "SLACK_7",
+      "name": "Slack 7",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [
+        757,
+        419
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "START_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_2": {
+      "main": [
+        [
+          {
+            "node": "START_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_3": {
+      "main": [
+        [
+          {
+            "node": "GOOGLESHEETS_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GOOGLESHEETS_4": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_5": {
+      "main": [
+        [
+          {
+            "node": "IF_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_6": {
+      "main": [
+        [
+          {
+            "node": "SLACK_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "database-sync",
+    "complexity": "complex",
+    "pattern": "multi_branch"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "America\/New_York"
+  },
+  "meta": {
+    "created": "2024-07-15",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

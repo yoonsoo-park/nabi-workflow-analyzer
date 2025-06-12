@@ -1,0 +1,215 @@
+{
+  "name": "API Integration - File-Processing 48",
+  "id": "workflow_0048",
+  "active": false,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        294,
+        104
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "FUNCTION_1",
+      "name": "Function 1",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        654,
+        476
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "SET_2",
+      "name": "Set 2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        115,
+        261
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "status",
+              "value": "medium"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "FUNCTION_3",
+      "name": "Function 3",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        286,
+        318
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "SET_4",
+      "name": "Set 4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        528,
+        319
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "status",
+              "value": "medium"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "FUNCTION_5",
+      "name": "Function 5",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        242,
+        595
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "FUNCTION_6",
+      "name": "Function 6",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        74,
+        246
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "START_7",
+      "name": "Start 7",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        183,
+        275
+      ],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_1": {
+      "main": [
+        [
+          {
+            "node": "SET_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_2": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_3": {
+      "main": [
+        [
+          {
+            "node": "SET_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_4": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_5": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_6": {
+      "main": [
+        [
+          {
+            "node": "START_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "file-processing",
+    "complexity": "medium",
+    "pattern": "api_integration"
+  },
+  "settings": {
+    "errorWorkflow": "error_handler",
+    "timezone": "America\/New_York"
+  },
+  "meta": {
+    "created": "2024-03-27",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

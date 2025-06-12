@@ -1,0 +1,415 @@
+{
+  "name": "Complex Multi-Branch - Api-Integration 73",
+  "id": "workflow_0073",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        148,
+        74
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "GOOGLESHEETS_1",
+      "name": "Google Sheets 1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [
+        115,
+        552
+      ],
+      "parameters": {
+        "operation": "append",
+        "sheetId": "1234567890",
+        "values": {
+          "A": "={{ $json.name }}",
+          "B": "={{ $json.email }}"
+        }
+      }
+    },
+    {
+      "id": "SLACK_2",
+      "name": "Slack 2",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        60,
+        553
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "SET_3",
+      "name": "Set 3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        638,
+        196
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "category",
+              "value": "pending"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "FUNCTION_4",
+      "name": "Function 4",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        110,
+        352
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "IF_5",
+      "name": "IF 5",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        593,
+        110
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "EMAILSEND_6",
+      "name": "Send Email 6",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        733,
+        417
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "SLACK_7",
+      "name": "Slack 7",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        129,
+        137
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "SET_8",
+      "name": "Set 8",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        86,
+        207
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "category",
+              "value": "pending"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "GOOGLESHEETS_9",
+      "name": "Google Sheets 9",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 1,
+      "position": [
+        335,
+        550
+      ],
+      "parameters": {
+        "operation": "append",
+        "sheetId": "1234567890",
+        "values": {
+          "A": "={{ $json.name }}",
+          "B": "={{ $json.email }}"
+        }
+      }
+    },
+    {
+      "id": "START_10",
+      "name": "Start 10",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        405,
+        377
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "SLACK_11",
+      "name": "Slack 11",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [
+        218,
+        556
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "FUNCTION_12",
+      "name": "Function 12",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        672,
+        183
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "SET_13",
+      "name": "Set 13",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        397,
+        112
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "category",
+              "value": "pending"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "IF_14",
+      "name": "IF 14",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        680,
+        278
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "GOOGLESHEETS_1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "SLACK_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_2": {
+      "main": [
+        [
+          {
+            "node": "SET_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_3": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_4": {
+      "main": [
+        [
+          {
+            "node": "IF_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_5": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_6": {
+      "main": [
+        [
+          {
+            "node": "SLACK_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_7": {
+      "main": [
+        [
+          {
+            "node": "SET_8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_8": {
+      "main": [
+        [
+          {
+            "node": "GOOGLESHEETS_9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GOOGLESHEETS_9": {
+      "main": [
+        [
+          {
+            "node": "START_10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_10": {
+      "main": [
+        [
+          {
+            "node": "SLACK_11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_11": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_12": {
+      "main": [
+        [
+          {
+            "node": "SET_13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_13": {
+      "main": [
+        [
+          {
+            "node": "IF_14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "api-integration",
+    "complexity": "complex",
+    "pattern": "multi_branch"
+  },
+  "settings": {
+    "errorWorkflow": "error_handler",
+    "timezone": "Europe\/London"
+  },
+  "meta": {
+    "created": "2024-08-04",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

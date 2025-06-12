@@ -1,0 +1,347 @@
+{
+  "name": "Complex Multi-Branch - Social-Media 90",
+  "id": "workflow_0090",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        610,
+        414
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "WAIT_1",
+      "name": "Wait 1",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        659,
+        324
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "HTTPREQUEST_2",
+      "name": "HTTP Request 2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [
+        395,
+        159
+      ],
+      "parameters": {
+        "url": "https:\/\/api.github.com\/user",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "WAIT_3",
+      "name": "Wait 3",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        380,
+        558
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "FUNCTION_4",
+      "name": "Function 4",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        557,
+        266
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "EMAILSEND_5",
+      "name": "Send Email 5",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        748,
+        278
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "SET_6",
+      "name": "Set 6",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        629,
+        173
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "priority",
+              "value": "medium"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "GOOGLESHEETS_7",
+      "name": "Google Sheets 7",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 1,
+      "position": [
+        54,
+        272
+      ],
+      "parameters": {
+        "operation": "append",
+        "sheetId": "1234567890",
+        "values": {
+          "A": "={{ $json.name }}",
+          "B": "={{ $json.email }}"
+        }
+      }
+    },
+    {
+      "id": "EMAILSEND_8",
+      "name": "Send Email 8",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        283,
+        344
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "HTTPREQUEST_9",
+      "name": "HTTP Request 9",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [
+        201,
+        64
+      ],
+      "parameters": {
+        "url": "https:\/\/api.github.com\/user",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "HTTPREQUEST_10",
+      "name": "HTTP Request 10",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [
+        450,
+        494
+      ],
+      "parameters": {
+        "url": "https:\/\/jsonplaceholder.typicode.com\/posts",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "EMAILSEND_11",
+      "name": "Send Email 11",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        429,
+        533
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "START_12",
+      "name": "Start 12",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        385,
+        93
+      ],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "WAIT_1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTPREQUEST_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_2": {
+      "main": [
+        [
+          {
+            "node": "WAIT_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT_3": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_4": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_5": {
+      "main": [
+        [
+          {
+            "node": "SET_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_6": {
+      "main": [
+        [
+          {
+            "node": "GOOGLESHEETS_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GOOGLESHEETS_7": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_8": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_9": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_10": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_11": {
+      "main": [
+        [
+          {
+            "node": "START_12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "social-media",
+    "complexity": "complex",
+    "pattern": "multi_branch"
+  },
+  "settings": {
+    "errorWorkflow": "error_handler",
+    "timezone": "Asia\/Tokyo"
+  },
+  "meta": {
+    "created": "2024-02-04",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

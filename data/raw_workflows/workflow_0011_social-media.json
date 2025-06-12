@@ -1,0 +1,299 @@
+{
+  "name": "Data Processing Pipeline - Social-Media 11",
+  "id": "workflow_0011",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        739,
+        86
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "WAIT_1",
+      "name": "Wait 1",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 2,
+      "position": [
+        290,
+        354
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "EMAILSEND_2",
+      "name": "Send Email 2",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        537,
+        547
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "EMAILSEND_3",
+      "name": "Send Email 3",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        789,
+        276
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "SET_4",
+      "name": "Set 4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        761,
+        446
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "status",
+              "value": "medium"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "WAIT_5",
+      "name": "Wait 5",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        216,
+        466
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "GOOGLESHEETS_6",
+      "name": "Google Sheets 6",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [
+        516,
+        78
+      ],
+      "parameters": {
+        "operation": "append",
+        "sheetId": "1234567890",
+        "values": {
+          "A": "={{ $json.name }}",
+          "B": "={{ $json.email }}"
+        }
+      }
+    },
+    {
+      "id": "START_7",
+      "name": "Start 7",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        289,
+        369
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "GOOGLESHEETS_8",
+      "name": "Google Sheets 8",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [
+        452,
+        585
+      ],
+      "parameters": {
+        "operation": "append",
+        "sheetId": "1234567890",
+        "values": {
+          "A": "={{ $json.name }}",
+          "B": "={{ $json.email }}"
+        }
+      }
+    },
+    {
+      "id": "SLACK_9",
+      "name": "Slack 9",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        61,
+        82
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "EMAILSEND_10",
+      "name": "Send Email 10",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        332,
+        426
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "WAIT_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT_1": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_2": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_3": {
+      "main": [
+        [
+          {
+            "node": "SET_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_4": {
+      "main": [
+        [
+          {
+            "node": "WAIT_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT_5": {
+      "main": [
+        [
+          {
+            "node": "GOOGLESHEETS_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GOOGLESHEETS_6": {
+      "main": [
+        [
+          {
+            "node": "START_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_7": {
+      "main": [
+        [
+          {
+            "node": "GOOGLESHEETS_8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GOOGLESHEETS_8": {
+      "main": [
+        [
+          {
+            "node": "SLACK_9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_9": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "social-media",
+    "complexity": "complex",
+    "pattern": "data_pipeline"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "Asia\/Tokyo"
+  },
+  "meta": {
+    "created": "2024-06-07",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

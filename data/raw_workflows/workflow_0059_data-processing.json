@@ -1,0 +1,365 @@
+{
+  "name": "Complex Multi-Branch - Data-Processing 59",
+  "id": "workflow_0059",
+  "active": false,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        535,
+        135
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "IF_1",
+      "name": "IF 1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        782,
+        375
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "WAIT_2",
+      "name": "Wait 2",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 2,
+      "position": [
+        357,
+        216
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "HTTPREQUEST_3",
+      "name": "HTTP Request 3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        298,
+        563
+      ],
+      "parameters": {
+        "url": "https:\/\/api.github.com\/user",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "FUNCTION_4",
+      "name": "Function 4",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        778,
+        473
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "START_5",
+      "name": "Start 5",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        617,
+        309
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "FUNCTION_6",
+      "name": "Function 6",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        590,
+        444
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "EMAILSEND_7",
+      "name": "Send Email 7",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        636,
+        596
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "WEBHOOK_8",
+      "name": "Webhook 8",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        239,
+        73
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "WEBHOOK_9",
+      "name": "Webhook 9",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        441,
+        87
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "WAIT_10",
+      "name": "Wait 10",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        467,
+        404
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "IF_11",
+      "name": "IF 11",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        293,
+        376
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "EMAILSEND_12",
+      "name": "Send Email 12",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        317,
+        104
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "START_13",
+      "name": "Start 13",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        484,
+        412
+      ],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "IF_1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "WAIT_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT_2": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_3": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_4": {
+      "main": [
+        [
+          {
+            "node": "START_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_5": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_6": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_7": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WEBHOOK_8": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WEBHOOK_9": {
+      "main": [
+        [
+          {
+            "node": "WAIT_10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT_10": {
+      "main": [
+        [
+          {
+            "node": "IF_11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_11": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_12": {
+      "main": [
+        [
+          {
+            "node": "START_13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "data-processing",
+    "complexity": "complex",
+    "pattern": "multi_branch"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "Asia\/Tokyo"
+  },
+  "meta": {
+    "created": "2024-03-11",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

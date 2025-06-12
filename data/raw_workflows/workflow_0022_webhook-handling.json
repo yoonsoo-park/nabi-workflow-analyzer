@@ -1,0 +1,335 @@
+{
+  "name": "Data Processing Pipeline - Webhook-Handling 22",
+  "id": "workflow_0022",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        137,
+        366
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "START_1",
+      "name": "Start 1",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        754,
+        426
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "IF_2",
+      "name": "IF 2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        403,
+        278
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "GOOGLESHEETS_3",
+      "name": "Google Sheets 3",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 1,
+      "position": [
+        103,
+        198
+      ],
+      "parameters": {
+        "operation": "append",
+        "sheetId": "1234567890",
+        "values": {
+          "A": "={{ $json.name }}",
+          "B": "={{ $json.email }}"
+        }
+      }
+    },
+    {
+      "id": "SLACK_4",
+      "name": "Slack 4",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        68,
+        126
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "WAIT_5",
+      "name": "Wait 5",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        296,
+        387
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "START_6",
+      "name": "Start 6",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        147,
+        441
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "SET_7",
+      "name": "Set 7",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        637,
+        525
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "timestamp",
+              "value": "low"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "WEBHOOK_8",
+      "name": "Webhook 8",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        653,
+        87
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "WEBHOOK_9",
+      "name": "Webhook 9",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        529,
+        257
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "IF_10",
+      "name": "IF 10",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        174,
+        444
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "IF_11",
+      "name": "IF 11",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        668,
+        525
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "START_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_1": {
+      "main": [
+        [
+          {
+            "node": "IF_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_2": {
+      "main": [
+        [
+          {
+            "node": "GOOGLESHEETS_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GOOGLESHEETS_3": {
+      "main": [
+        [
+          {
+            "node": "SLACK_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_4": {
+      "main": [
+        [
+          {
+            "node": "WAIT_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT_5": {
+      "main": [
+        [
+          {
+            "node": "START_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_6": {
+      "main": [
+        [
+          {
+            "node": "SET_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_7": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WEBHOOK_8": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WEBHOOK_9": {
+      "main": [
+        [
+          {
+            "node": "IF_10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_10": {
+      "main": [
+        [
+          {
+            "node": "IF_11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "webhook-handling",
+    "complexity": "complex",
+    "pattern": "data_pipeline"
+  },
+  "settings": {
+    "errorWorkflow": "error_handler",
+    "timezone": "Asia\/Tokyo"
+  },
+  "meta": {
+    "created": "2024-03-28",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

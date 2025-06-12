@@ -1,0 +1,252 @@
+{
+  "name": "Complex Multi-Branch - Webhook-Handling 16",
+  "id": "workflow_0016",
+  "active": false,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        597,
+        483
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "WEBHOOK_1",
+      "name": "Webhook 1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        350,
+        159
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "GOOGLESHEETS_2",
+      "name": "Google Sheets 2",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [
+        279,
+        590
+      ],
+      "parameters": {
+        "operation": "append",
+        "sheetId": "1234567890",
+        "values": {
+          "A": "={{ $json.name }}",
+          "B": "={{ $json.email }}"
+        }
+      }
+    },
+    {
+      "id": "WEBHOOK_3",
+      "name": "Webhook 3",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        294,
+        206
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "SET_4",
+      "name": "Set 4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        675,
+        481
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "timestamp",
+              "value": "processed"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "START_5",
+      "name": "Start 5",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        720,
+        103
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "IF_6",
+      "name": "IF 6",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        721,
+        256
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "HTTPREQUEST_7",
+      "name": "HTTP Request 7",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        277,
+        488
+      ],
+      "parameters": {
+        "url": "https:\/\/jsonplaceholder.typicode.com\/posts",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "SET_8",
+      "name": "Set 8",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        730,
+        499
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "timestamp",
+              "value": "processed"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GOOGLESHEETS_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GOOGLESHEETS_2": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WEBHOOK_3": {
+      "main": [
+        [
+          {
+            "node": "SET_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_4": {
+      "main": [
+        [
+          {
+            "node": "START_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_5": {
+      "main": [
+        [
+          {
+            "node": "IF_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_6": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_7": {
+      "main": [
+        [
+          {
+            "node": "SET_8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "webhook-handling",
+    "complexity": "complex",
+    "pattern": "multi_branch"
+  },
+  "settings": {
+    "errorWorkflow": "error_handler",
+    "timezone": "Asia\/Tokyo"
+  },
+  "meta": {
+    "created": "2024-02-10",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

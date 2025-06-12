@@ -1,0 +1,197 @@
+{
+  "name": "API Integration - Notification 49",
+  "id": "workflow_0049",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        549,
+        577
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "SET_1",
+      "name": "Set 1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        122,
+        483
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "timestamp",
+              "value": "medium"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "HTTPREQUEST_2",
+      "name": "HTTP Request 2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        752,
+        527
+      ],
+      "parameters": {
+        "url": "https:\/\/api.openweathermap.org\/data\/2.5\/weather",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "START_3",
+      "name": "Start 3",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        197,
+        296
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "HTTPREQUEST_4",
+      "name": "HTTP Request 4",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        628,
+        222
+      ],
+      "parameters": {
+        "url": "https:\/\/jsonplaceholder.typicode.com\/posts",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "START_5",
+      "name": "Start 5",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        560,
+        483
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "SET_6",
+      "name": "Set 6",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        582,
+        80
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "timestamp",
+              "value": "medium"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "SET_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_1": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_2": {
+      "main": [
+        [
+          {
+            "node": "START_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_3": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_4": {
+      "main": [
+        [
+          {
+            "node": "START_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_5": {
+      "main": [
+        [
+          {
+            "node": "SET_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "notification",
+    "complexity": "medium",
+    "pattern": "api_integration"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "Europe\/London"
+  },
+  "meta": {
+    "created": "2024-09-25",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

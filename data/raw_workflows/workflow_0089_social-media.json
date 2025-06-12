@@ -1,0 +1,408 @@
+{
+  "name": "Data Processing Pipeline - Social-Media 89",
+  "id": "workflow_0089",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        636,
+        277
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "EMAILSEND_1",
+      "name": "Send Email 1",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        614,
+        164
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "HTTPREQUEST_2",
+      "name": "HTTP Request 2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        120,
+        422
+      ],
+      "parameters": {
+        "url": "https:\/\/api.openweathermap.org\/data\/2.5\/weather",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "WAIT_3",
+      "name": "Wait 3",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 2,
+      "position": [
+        413,
+        74
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "WEBHOOK_4",
+      "name": "Webhook 4",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        642,
+        238
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "START_5",
+      "name": "Start 5",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        59,
+        268
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "WEBHOOK_6",
+      "name": "Webhook 6",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        157,
+        482
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "FUNCTION_7",
+      "name": "Function 7",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        684,
+        334
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "WAIT_8",
+      "name": "Wait 8",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 2,
+      "position": [
+        401,
+        564
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "EMAILSEND_9",
+      "name": "Send Email 9",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        402,
+        234
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "EMAILSEND_10",
+      "name": "Send Email 10",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        570,
+        132
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "WEBHOOK_11",
+      "name": "Webhook 11",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        613,
+        513
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "START_12",
+      "name": "Start 12",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        663,
+        201
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "SLACK_13",
+      "name": "Slack 13",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        593,
+        249
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "FUNCTION_14",
+      "name": "Function 14",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        466,
+        321
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "SLACK_15",
+      "name": "Slack 15",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        158,
+        143
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_1": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_2": {
+      "main": [
+        [
+          {
+            "node": "WAIT_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT_3": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WEBHOOK_4": {
+      "main": [
+        [
+          {
+            "node": "START_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_5": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WEBHOOK_6": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_7": {
+      "main": [
+        [
+          {
+            "node": "WAIT_8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT_8": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_9": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_10": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WEBHOOK_11": {
+      "main": [
+        [
+          {
+            "node": "START_12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_12": {
+      "main": [
+        [
+          {
+            "node": "SLACK_13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_13": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_14": {
+      "main": [
+        [
+          {
+            "node": "SLACK_15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "social-media",
+    "complexity": "complex",
+    "pattern": "data_pipeline"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "Europe\/London"
+  },
+  "meta": {
+    "created": "2024-02-25",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

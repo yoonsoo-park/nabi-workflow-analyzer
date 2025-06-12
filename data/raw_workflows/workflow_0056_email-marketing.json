@@ -1,0 +1,538 @@
+{
+  "name": "Data Processing Pipeline - Email-Marketing 56",
+  "id": "workflow_0056",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        558,
+        101
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "START_1",
+      "name": "Start 1",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        320,
+        324
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "SLACK_2",
+      "name": "Slack 2",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [
+        104,
+        382
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "EMAILSEND_3",
+      "name": "Send Email 3",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        643,
+        484
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "EMAILSEND_4",
+      "name": "Send Email 4",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        699,
+        154
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "HTTPREQUEST_5",
+      "name": "HTTP Request 5",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        306,
+        312
+      ],
+      "parameters": {
+        "url": "https:\/\/reqres.in\/api\/users",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "FUNCTION_6",
+      "name": "Function 6",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        624,
+        497
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "WEBHOOK_7",
+      "name": "Webhook 7",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        426,
+        579
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "IF_8",
+      "name": "IF 8",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        613,
+        464
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "SLACK_9",
+      "name": "Slack 9",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        747,
+        507
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "SET_10",
+      "name": "Set 10",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        149,
+        570
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "priority",
+              "value": "pending"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "SLACK_11",
+      "name": "Slack 11",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [
+        357,
+        283
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "SLACK_12",
+      "name": "Slack 12",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        673,
+        245
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "EMAILSEND_13",
+      "name": "Send Email 13",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        191,
+        431
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "SLACK_14",
+      "name": "Slack 14",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        761,
+        101
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "START_15",
+      "name": "Start 15",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        287,
+        410
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "IF_16",
+      "name": "IF 16",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        707,
+        181
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "SET_17",
+      "name": "Set 17",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        581,
+        172
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "priority",
+              "value": "pending"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "HTTPREQUEST_18",
+      "name": "HTTP Request 18",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        722,
+        300
+      ],
+      "parameters": {
+        "url": "https:\/\/api.openweathermap.org\/data\/2.5\/weather",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "WEBHOOK_19",
+      "name": "Webhook 19",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        169,
+        81
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "START_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_1": {
+      "main": [
+        [
+          {
+            "node": "SLACK_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_2": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_3": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_4": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_5": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_6": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WEBHOOK_7": {
+      "main": [
+        [
+          {
+            "node": "IF_8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_8": {
+      "main": [
+        [
+          {
+            "node": "SLACK_9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_9": {
+      "main": [
+        [
+          {
+            "node": "SET_10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_10": {
+      "main": [
+        [
+          {
+            "node": "SLACK_11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_11": {
+      "main": [
+        [
+          {
+            "node": "SLACK_12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_12": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_13": {
+      "main": [
+        [
+          {
+            "node": "SLACK_14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_14": {
+      "main": [
+        [
+          {
+            "node": "START_15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_15": {
+      "main": [
+        [
+          {
+            "node": "IF_16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_16": {
+      "main": [
+        [
+          {
+            "node": "SET_17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_17": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_18": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "email-marketing",
+    "complexity": "complex",
+    "pattern": "data_pipeline"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "America\/New_York"
+  },
+  "meta": {
+    "created": "2024-02-27",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

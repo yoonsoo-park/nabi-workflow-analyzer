@@ -1,0 +1,423 @@
+{
+  "name": "Data Processing Pipeline - File-Processing 36",
+  "id": "workflow_0036",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        219,
+        550
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "IF_1",
+      "name": "IF 1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        627,
+        220
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "WEBHOOK_2",
+      "name": "Webhook 2",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        357,
+        503
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "SLACK_3",
+      "name": "Slack 3",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [
+        393,
+        377
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "SET_4",
+      "name": "Set 4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        148,
+        115
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "priority",
+              "value": "processed"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "WAIT_5",
+      "name": "Wait 5",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        248,
+        64
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "IF_6",
+      "name": "IF 6",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        675,
+        560
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "EMAILSEND_7",
+      "name": "Send Email 7",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        399,
+        327
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "SET_8",
+      "name": "Set 8",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        456,
+        90
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "priority",
+              "value": "processed"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "FUNCTION_9",
+      "name": "Function 9",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        432,
+        212
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "FUNCTION_10",
+      "name": "Function 10",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        698,
+        190
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "EMAILSEND_11",
+      "name": "Send Email 11",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        269,
+        304
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "IF_12",
+      "name": "IF 12",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        792,
+        260
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "GOOGLESHEETS_13",
+      "name": "Google Sheets 13",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 1,
+      "position": [
+        438,
+        56
+      ],
+      "parameters": {
+        "operation": "append",
+        "sheetId": "1234567890",
+        "values": {
+          "A": "={{ $json.name }}",
+          "B": "={{ $json.email }}"
+        }
+      }
+    },
+    {
+      "id": "EMAILSEND_14",
+      "name": "Send Email 14",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        148,
+        364
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "IF_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_1": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WEBHOOK_2": {
+      "main": [
+        [
+          {
+            "node": "SLACK_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_3": {
+      "main": [
+        [
+          {
+            "node": "SET_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_4": {
+      "main": [
+        [
+          {
+            "node": "WAIT_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT_5": {
+      "main": [
+        [
+          {
+            "node": "IF_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_6": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_7": {
+      "main": [
+        [
+          {
+            "node": "SET_8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_8": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_9": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_10": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_11": {
+      "main": [
+        [
+          {
+            "node": "IF_12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_12": {
+      "main": [
+        [
+          {
+            "node": "GOOGLESHEETS_13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GOOGLESHEETS_13": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "file-processing",
+    "complexity": "complex",
+    "pattern": "data_pipeline"
+  },
+  "settings": {
+    "errorWorkflow": "error_handler",
+    "timezone": "Europe\/London"
+  },
+  "meta": {
+    "created": "2024-06-21",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}
