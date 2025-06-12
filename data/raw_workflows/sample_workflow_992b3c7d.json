@@ -1,0 +1,88 @@
+{
+  "name": "API Call Workflow #18_428b7921",
+  "id": "d18db2e6-f411-4f29-b344-52ea71c6a902",
+  "active": false,
+  "nodes": [
+    {
+      "id": "Start_428b7921",
+      "name": "Manual Trigger 18",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        48,
+        101
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "GetAPI_428b7921",
+      "name": "Fetch Data 18",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3.2,
+      "position": [
+        258,
+        105
+      ],
+      "parameters": {
+        "url": "https://jsonplaceholder.typicode.com/todos/2",
+        "method": "GET",
+        "json": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "SetOutput_428b7921",
+      "name": "Store API Result 18",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1.2,
+      "position": [
+        454,
+        97
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "api_title",
+              "value": "={{$json.title}} (wf 18)"
+            }
+          ]
+        },
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Start_428b7921": {
+      "main": [
+        [
+          {
+            "node": "GetAPI_428b7921",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "GetAPI_428b7921": {
+      "main": [
+        [
+          {
+            "node": "SetOutput_428b7921",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    {
+      "name": "tag_3"
+    },
+    {
+      "name": "generated_sample"
+    }
+  ]
+}

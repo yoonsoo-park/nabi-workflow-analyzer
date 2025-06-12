@@ -1,0 +1,88 @@
+{
+  "name": "API Call Workflow #19_a2b8793a",
+  "id": "86fe2ca4-b70f-48b3-96b7-e287f7ac1392",
+  "active": true,
+  "nodes": [
+    {
+      "id": "Start_a2b8793a",
+      "name": "Manual Trigger 19",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        45,
+        97
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "GetAPI_a2b8793a",
+      "name": "Fetch Data 19",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3.2,
+      "position": [
+        240,
+        106
+      ],
+      "parameters": {
+        "url": "https://jsonplaceholder.typicode.com/todos/20",
+        "method": "GET",
+        "json": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "SetOutput_a2b8793a",
+      "name": "Store API Result 19",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1.2,
+      "position": [
+        449,
+        104
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "api_title",
+              "value": "={{$json.title}} (wf 19)"
+            }
+          ]
+        },
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Start_a2b8793a": {
+      "main": [
+        [
+          {
+            "node": "GetAPI_a2b8793a",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "GetAPI_a2b8793a": {
+      "main": [
+        [
+          {
+            "node": "SetOutput_a2b8793a",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    {
+      "name": "tag_3"
+    },
+    {
+      "name": "generated_sample"
+    }
+  ]
+}
