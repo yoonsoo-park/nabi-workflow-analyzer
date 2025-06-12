@@ -1,0 +1,185 @@
+{
+  "name": "Conditional Workflow - Webhook-Handling 67",
+  "id": "workflow_0067",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        669,
+        413
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "IF_1",
+      "name": "IF 1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        516,
+        305
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "SET_2",
+      "name": "Set 2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        128,
+        572
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "priority",
+              "value": "pending"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "IF_3",
+      "name": "IF 3",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        565,
+        101
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "EMAILSEND_4",
+      "name": "Send Email 4",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        627,
+        149
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "SET_5",
+      "name": "Set 5",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        89,
+        167
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "priority",
+              "value": "pending"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "IF_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_1": {
+      "main": [
+        [
+          {
+            "node": "SET_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ],
+      "false": [
+        [
+          {
+            "node": "IF_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_3": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_4": {
+      "main": [
+        [
+          {
+            "node": "SET_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "webhook-handling",
+    "complexity": "medium",
+    "pattern": "conditional"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "Asia\/Tokyo"
+  },
+  "meta": {
+    "created": "2024-06-27",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

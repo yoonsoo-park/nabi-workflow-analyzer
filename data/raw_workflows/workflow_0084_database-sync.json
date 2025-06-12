@@ -1,0 +1,201 @@
+{
+  "name": "Conditional Workflow - Database-Sync 84",
+  "id": "workflow_0084",
+  "active": false,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        505,
+        194
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "IF_1",
+      "name": "IF 1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        250,
+        323
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "SET_2",
+      "name": "Set 2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        162,
+        517
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "status",
+              "value": "processed"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "START_3",
+      "name": "Start 3",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        613,
+        441
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "EMAILSEND_4",
+      "name": "Send Email 4",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        276,
+        253
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "EMAILSEND_5",
+      "name": "Send Email 5",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        489,
+        534
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "SET_6",
+      "name": "Set 6",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        379,
+        587
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "status",
+              "value": "processed"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "IF_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_1": {
+      "main": [
+        [
+          {
+            "node": "SET_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ],
+      "false": [
+        [
+          {
+            "node": "START_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_3": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_4": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_5": {
+      "main": [
+        [
+          {
+            "node": "SET_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "database-sync",
+    "complexity": "medium",
+    "pattern": "conditional"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "Asia\/Tokyo"
+  },
+  "meta": {
+    "created": "2024-05-23",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

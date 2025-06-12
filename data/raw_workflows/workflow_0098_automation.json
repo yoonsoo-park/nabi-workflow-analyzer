@@ -1,0 +1,114 @@
+{
+  "name": "Simple Linear Workflow - Automation 98",
+  "id": "workflow_0098",
+  "active": false,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        100,
+        100
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "SLACK_1",
+      "name": "Slack 1",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [
+        300,
+        100
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "WAIT_2",
+      "name": "Wait 2",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 2,
+      "position": [
+        500,
+        100
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "GOOGLESHEETS_3",
+      "name": "Google Sheets 3",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 1,
+      "position": [
+        700,
+        100
+      ],
+      "parameters": {
+        "operation": "append",
+        "sheetId": "1234567890",
+        "values": {
+          "A": "={{ $json.name }}",
+          "B": "={{ $json.email }}"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "SLACK_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_1": {
+      "main": [
+        [
+          {
+            "node": "WAIT_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT_2": {
+      "main": [
+        [
+          {
+            "node": "GOOGLESHEETS_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "automation",
+    "complexity": "simple",
+    "pattern": "linear"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "Asia\/Tokyo"
+  },
+  "meta": {
+    "created": "2024-08-27",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

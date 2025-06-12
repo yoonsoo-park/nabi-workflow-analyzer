@@ -1,0 +1,294 @@
+{
+  "name": "Complex Multi-Branch - Api-Integration 23",
+  "id": "workflow_0023",
+  "active": false,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        332,
+        378
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "FUNCTION_1",
+      "name": "Function 1",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        734,
+        126
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "WAIT_2",
+      "name": "Wait 2",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        766,
+        363
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "GOOGLESHEETS_3",
+      "name": "Google Sheets 3",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 1,
+      "position": [
+        581,
+        266
+      ],
+      "parameters": {
+        "operation": "append",
+        "sheetId": "1234567890",
+        "values": {
+          "A": "={{ $json.name }}",
+          "B": "={{ $json.email }}"
+        }
+      }
+    },
+    {
+      "id": "START_4",
+      "name": "Start 4",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        407,
+        551
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "START_5",
+      "name": "Start 5",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        311,
+        576
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "HTTPREQUEST_6",
+      "name": "HTTP Request 6",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        265,
+        110
+      ],
+      "parameters": {
+        "url": "https:\/\/reqres.in\/api\/users",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "SET_7",
+      "name": "Set 7",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        159,
+        476
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "user_id",
+              "value": "medium"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "SET_8",
+      "name": "Set 8",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        99,
+        412
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "user_id",
+              "value": "medium"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "HTTPREQUEST_9",
+      "name": "HTTP Request 9",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [
+        528,
+        91
+      ],
+      "parameters": {
+        "url": "https:\/\/api.openweathermap.org\/data\/2.5\/weather",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "SLACK_10",
+      "name": "Slack 10",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [
+        798,
+        179
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "WAIT_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT_2": {
+      "main": [
+        [
+          {
+            "node": "GOOGLESHEETS_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GOOGLESHEETS_3": {
+      "main": [
+        [
+          {
+            "node": "START_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_4": {
+      "main": [
+        [
+          {
+            "node": "START_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_5": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_6": {
+      "main": [
+        [
+          {
+            "node": "SET_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_7": {
+      "main": [
+        [
+          {
+            "node": "SET_8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_8": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_9": {
+      "main": [
+        [
+          {
+            "node": "SLACK_10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "api-integration",
+    "complexity": "complex",
+    "pattern": "multi_branch"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "Asia\/Tokyo"
+  },
+  "meta": {
+    "created": "2024-09-21",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

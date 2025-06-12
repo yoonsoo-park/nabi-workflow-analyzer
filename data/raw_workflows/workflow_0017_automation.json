@@ -1,0 +1,222 @@
+{
+  "name": "API Integration - Automation 17",
+  "id": "workflow_0017",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        197,
+        593
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "FUNCTION_1",
+      "name": "Function 1",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        244,
+        578
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "SET_2",
+      "name": "Set 2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        298,
+        518
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "user_id",
+              "value": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "FUNCTION_3",
+      "name": "Function 3",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        664,
+        294
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "HTTPREQUEST_4",
+      "name": "HTTP Request 4",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        732,
+        514
+      ],
+      "parameters": {
+        "url": "https:\/\/api.github.com\/user",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "HTTPREQUEST_5",
+      "name": "HTTP Request 5",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        70,
+        478
+      ],
+      "parameters": {
+        "url": "https:\/\/reqres.in\/api\/users",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "HTTPREQUEST_6",
+      "name": "HTTP Request 6",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [
+        292,
+        147
+      ],
+      "parameters": {
+        "url": "https:\/\/reqres.in\/api\/users",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "FUNCTION_7",
+      "name": "Function 7",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        629,
+        368
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_1": {
+      "main": [
+        [
+          {
+            "node": "SET_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_2": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_3": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_4": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_5": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_6": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "automation",
+    "complexity": "medium",
+    "pattern": "api_integration"
+  },
+  "settings": {
+    "errorWorkflow": "error_handler",
+    "timezone": "America\/New_York"
+  },
+  "meta": {
+    "created": "2024-05-21",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

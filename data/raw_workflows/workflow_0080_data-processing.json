@@ -1,0 +1,135 @@
+{
+  "name": "Conditional Workflow - Data-Processing 80",
+  "id": "workflow_0080",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        310,
+        418
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "IF_1",
+      "name": "IF 1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        769,
+        415
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "START_2",
+      "name": "Start 2",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        503,
+        256
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "EMAILSEND_3",
+      "name": "Send Email 3",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        555,
+        248
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "START_4",
+      "name": "Start 4",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        591,
+        473
+      ],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "IF_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_1": {
+      "main": [
+        [
+          {
+            "node": "START_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ],
+      "false": [
+        [
+          {
+            "node": "EMAILSEND_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_3": {
+      "main": [
+        [
+          {
+            "node": "START_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "data-processing",
+    "complexity": "medium",
+    "pattern": "conditional"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "Asia\/Tokyo"
+  },
+  "meta": {
+    "created": "2024-05-04",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

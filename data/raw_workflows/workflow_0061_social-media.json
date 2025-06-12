@@ -1,0 +1,160 @@
+{
+  "name": "Conditional Workflow - Social-Media 61",
+  "id": "workflow_0061",
+  "active": false,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        130,
+        555
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "IF_1",
+      "name": "IF 1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        669,
+        210
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "IF_2",
+      "name": "IF 2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        407,
+        166
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "IF_3",
+      "name": "IF 3",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        367,
+        461
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "SET_4",
+      "name": "Set 4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        747,
+        502
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "user_id",
+              "value": "low"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "IF_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_1": {
+      "main": [
+        [
+          {
+            "node": "IF_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ],
+      "false": [
+        [
+          {
+            "node": "IF_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_3": {
+      "main": [
+        [
+          {
+            "node": "SET_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "social-media",
+    "complexity": "medium",
+    "pattern": "conditional"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "Europe\/London"
+  },
+  "meta": {
+    "created": "2024-01-19",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

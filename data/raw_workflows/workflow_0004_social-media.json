@@ -1,0 +1,203 @@
+{
+  "name": "Conditional Workflow - Social-Media 4",
+  "id": "workflow_0004",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        181,
+        206
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "IF_1",
+      "name": "IF 1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        409,
+        189
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "SET_2",
+      "name": "Set 2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        245,
+        198
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "timestamp",
+              "value": "processed"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "SET_3",
+      "name": "Set 3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        673,
+        295
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "timestamp",
+              "value": "processed"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "IF_4",
+      "name": "IF 4",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        458,
+        423
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "START_5",
+      "name": "Start 5",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        393,
+        564
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "START_6",
+      "name": "Start 6",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        407,
+        501
+      ],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "IF_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_1": {
+      "main": [
+        [
+          {
+            "node": "SET_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ],
+      "false": [
+        [
+          {
+            "node": "SET_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_3": {
+      "main": [
+        [
+          {
+            "node": "IF_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_4": {
+      "main": [
+        [
+          {
+            "node": "START_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_5": {
+      "main": [
+        [
+          {
+            "node": "START_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "social-media",
+    "complexity": "medium",
+    "pattern": "conditional"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "Europe\/London"
+  },
+  "meta": {
+    "created": "2024-08-20",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

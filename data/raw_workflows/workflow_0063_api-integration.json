@@ -1,0 +1,132 @@
+{
+  "name": "Simple Linear Workflow - Api-Integration 63",
+  "id": "workflow_0063",
+  "active": false,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        100,
+        100
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "START_1",
+      "name": "Start 1",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        300,
+        100
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "HTTPREQUEST_2",
+      "name": "HTTP Request 2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        500,
+        100
+      ],
+      "parameters": {
+        "url": "https:\/\/api.github.com\/user",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "START_3",
+      "name": "Start 3",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        700,
+        100
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "SLACK_4",
+      "name": "Slack 4",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        900,
+        100
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "START_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_1": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_2": {
+      "main": [
+        [
+          {
+            "node": "START_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_3": {
+      "main": [
+        [
+          {
+            "node": "SLACK_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "api-integration",
+    "complexity": "simple",
+    "pattern": "linear"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "America\/New_York"
+  },
+  "meta": {
+    "created": "2024-06-20",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

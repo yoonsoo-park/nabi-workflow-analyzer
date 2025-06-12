@@ -1,0 +1,116 @@
+{
+  "name": "Simple Linear Workflow - File-Processing 15",
+  "id": "workflow_0015",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        100,
+        100
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "WEBHOOK_1",
+      "name": "Webhook 1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        300,
+        100
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "IF_2",
+      "name": "IF 2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        500,
+        100
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "FUNCTION_3",
+      "name": "Function 3",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        700,
+        100
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WEBHOOK_1": {
+      "main": [
+        [
+          {
+            "node": "IF_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_2": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "file-processing",
+    "complexity": "simple",
+    "pattern": "linear"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "Asia\/Tokyo"
+  },
+  "meta": {
+    "created": "2024-03-13",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

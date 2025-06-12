@@ -1,0 +1,149 @@
+{
+  "name": "Conditional Workflow - Monitoring 8",
+  "id": "workflow_0008",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        548,
+        428
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "IF_1",
+      "name": "IF 1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        280,
+        69
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "SET_2",
+      "name": "Set 2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        772,
+        125
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "priority",
+              "value": "medium"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "SET_3",
+      "name": "Set 3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        630,
+        471
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "priority",
+              "value": "medium"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "START_4",
+      "name": "Start 4",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        389,
+        440
+      ],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "IF_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_1": {
+      "main": [
+        [
+          {
+            "node": "SET_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ],
+      "false": [
+        [
+          {
+            "node": "SET_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_3": {
+      "main": [
+        [
+          {
+            "node": "START_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "monitoring",
+    "complexity": "medium",
+    "pattern": "conditional"
+  },
+  "settings": {
+    "errorWorkflow": "error_handler",
+    "timezone": "Asia\/Tokyo"
+  },
+  "meta": {
+    "created": "2024-10-13",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

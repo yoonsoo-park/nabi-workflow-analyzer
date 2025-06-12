@@ -1,0 +1,323 @@
+{
+  "name": "Complex Multi-Branch - Data-Processing 93",
+  "id": "workflow_0093",
+  "active": false,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        420,
+        182
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "SET_1",
+      "name": "Set 1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        649,
+        202
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "priority",
+              "value": "low"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "START_2",
+      "name": "Start 2",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        167,
+        382
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "IF_3",
+      "name": "IF 3",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        760,
+        475
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "WAIT_4",
+      "name": "Wait 4",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        479,
+        203
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "FUNCTION_5",
+      "name": "Function 5",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        337,
+        117
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "IF_6",
+      "name": "IF 6",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        103,
+        542
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "GOOGLESHEETS_7",
+      "name": "Google Sheets 7",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 1,
+      "position": [
+        470,
+        397
+      ],
+      "parameters": {
+        "operation": "append",
+        "sheetId": "1234567890",
+        "values": {
+          "A": "={{ $json.name }}",
+          "B": "={{ $json.email }}"
+        }
+      }
+    },
+    {
+      "id": "FUNCTION_8",
+      "name": "Function 8",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        433,
+        164
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "WEBHOOK_9",
+      "name": "Webhook 9",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        476,
+        488
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "WAIT_10",
+      "name": "Wait 10",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        257,
+        589
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "WAIT_11",
+      "name": "Wait 11",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        479,
+        174
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "SET_1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "START_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_2": {
+      "main": [
+        [
+          {
+            "node": "IF_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_3": {
+      "main": [
+        [
+          {
+            "node": "WAIT_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT_4": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_5": {
+      "main": [
+        [
+          {
+            "node": "IF_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_6": {
+      "main": [
+        [
+          {
+            "node": "GOOGLESHEETS_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GOOGLESHEETS_7": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_8": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WEBHOOK_9": {
+      "main": [
+        [
+          {
+            "node": "WAIT_10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT_10": {
+      "main": [
+        [
+          {
+            "node": "WAIT_11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "data-processing",
+    "complexity": "complex",
+    "pattern": "multi_branch"
+  },
+  "settings": {
+    "errorWorkflow": "error_handler",
+    "timezone": "America\/New_York"
+  },
+  "meta": {
+    "created": "2024-12-17",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

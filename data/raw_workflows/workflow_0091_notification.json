@@ -1,0 +1,111 @@
+{
+  "name": "Simple Linear Workflow - Notification 91",
+  "id": "workflow_0091",
+  "active": false,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        100,
+        100
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "START_1",
+      "name": "Start 1",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        300,
+        100
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "EMAILSEND_2",
+      "name": "Send Email 2",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        500,
+        100
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "HTTPREQUEST_3",
+      "name": "HTTP Request 3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        700,
+        100
+      ],
+      "parameters": {
+        "url": "https:\/\/api.openweathermap.org\/data\/2.5\/weather",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "START_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_1": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_2": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "notification",
+    "complexity": "simple",
+    "pattern": "linear"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "America\/New_York"
+  },
+  "meta": {
+    "created": "2024-12-11",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

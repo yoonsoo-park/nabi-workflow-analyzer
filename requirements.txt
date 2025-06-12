@@ -1,0 +1,8 @@
+pandas
+networkx
+mlxtend
+ujson
+flask
+redis
+psycopg2-binary
+python-dotenv  # For loading .env files

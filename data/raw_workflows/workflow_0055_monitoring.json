@@ -1,0 +1,234 @@
+{
+  "name": "API Integration - Monitoring 55",
+  "id": "workflow_0055",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        758,
+        401
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "SET_1",
+      "name": "Set 1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        544,
+        394
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "timestamp",
+              "value": "high"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "FUNCTION_2",
+      "name": "Function 2",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        165,
+        517
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "START_3",
+      "name": "Start 3",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        155,
+        456
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "HTTPREQUEST_4",
+      "name": "HTTP Request 4",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        446,
+        175
+      ],
+      "parameters": {
+        "url": "https:\/\/jsonplaceholder.typicode.com\/posts",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "START_5",
+      "name": "Start 5",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        145,
+        52
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "START_6",
+      "name": "Start 6",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        84,
+        113
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "START_7",
+      "name": "Start 7",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        200,
+        439
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "HTTPREQUEST_8",
+      "name": "HTTP Request 8",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        475,
+        212
+      ],
+      "parameters": {
+        "url": "https:\/\/reqres.in\/api\/users",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "SET_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_1": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_2": {
+      "main": [
+        [
+          {
+            "node": "START_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_3": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_4": {
+      "main": [
+        [
+          {
+            "node": "START_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_5": {
+      "main": [
+        [
+          {
+            "node": "START_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_6": {
+      "main": [
+        [
+          {
+            "node": "START_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_7": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "monitoring",
+    "complexity": "medium",
+    "pattern": "api_integration"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "Europe\/London"
+  },
+  "meta": {
+    "created": "2024-09-28",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

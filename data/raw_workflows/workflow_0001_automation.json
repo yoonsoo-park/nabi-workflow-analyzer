@@ -1,0 +1,471 @@
+{
+  "name": "Data Processing Pipeline - Automation 1",
+  "id": "workflow_0001",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        481,
+        65
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "WAIT_1",
+      "name": "Wait 1",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        299,
+        577
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "SLACK_2",
+      "name": "Slack 2",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        717,
+        549
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "GOOGLESHEETS_3",
+      "name": "Google Sheets 3",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [
+        698,
+        80
+      ],
+      "parameters": {
+        "operation": "append",
+        "sheetId": "1234567890",
+        "values": {
+          "A": "={{ $json.name }}",
+          "B": "={{ $json.email }}"
+        }
+      }
+    },
+    {
+      "id": "WAIT_4",
+      "name": "Wait 4",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        786,
+        186
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "EMAILSEND_5",
+      "name": "Send Email 5",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        251,
+        327
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "SLACK_6",
+      "name": "Slack 6",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [
+        748,
+        433
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "IF_7",
+      "name": "IF 7",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        426,
+        416
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "IF_8",
+      "name": "IF 8",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        132,
+        308
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "SET_9",
+      "name": "Set 9",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        617,
+        405
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "priority",
+              "value": "high"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "WEBHOOK_10",
+      "name": "Webhook 10",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        312,
+        217
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "START_11",
+      "name": "Start 11",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        767,
+        419
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "IF_12",
+      "name": "IF 12",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        724,
+        87
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "START_13",
+      "name": "Start 13",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        773,
+        276
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "WEBHOOK_14",
+      "name": "Webhook 14",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        84,
+        196
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "IF_15",
+      "name": "IF 15",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        637,
+        424
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "HTTPREQUEST_16",
+      "name": "HTTP Request 16",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [
+        764,
+        243
+      ],
+      "parameters": {
+        "url": "https:\/\/jsonplaceholder.typicode.com\/posts",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "WAIT_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT_1": {
+      "main": [
+        [
+          {
+            "node": "SLACK_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_2": {
+      "main": [
+        [
+          {
+            "node": "GOOGLESHEETS_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GOOGLESHEETS_3": {
+      "main": [
+        [
+          {
+            "node": "WAIT_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT_4": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_5": {
+      "main": [
+        [
+          {
+            "node": "SLACK_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_6": {
+      "main": [
+        [
+          {
+            "node": "IF_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_7": {
+      "main": [
+        [
+          {
+            "node": "IF_8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_8": {
+      "main": [
+        [
+          {
+            "node": "SET_9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_9": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WEBHOOK_10": {
+      "main": [
+        [
+          {
+            "node": "START_11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_11": {
+      "main": [
+        [
+          {
+            "node": "IF_12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_12": {
+      "main": [
+        [
+          {
+            "node": "START_13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_13": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WEBHOOK_14": {
+      "main": [
+        [
+          {
+            "node": "IF_15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_15": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "automation",
+    "complexity": "complex",
+    "pattern": "data_pipeline"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "America\/New_York"
+  },
+  "meta": {
+    "created": "2024-05-14",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

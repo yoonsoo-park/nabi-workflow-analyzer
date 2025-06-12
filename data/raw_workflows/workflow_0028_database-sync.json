@@ -1,0 +1,279 @@
+{
+  "name": "Complex Multi-Branch - Database-Sync 28",
+  "id": "workflow_0028",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        502,
+        486
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "WEBHOOK_1",
+      "name": "Webhook 1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        700,
+        348
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "EMAILSEND_2",
+      "name": "Send Email 2",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        356,
+        497
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "FUNCTION_3",
+      "name": "Function 3",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        148,
+        398
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "IF_4",
+      "name": "IF 4",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        368,
+        528
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "WEBHOOK_5",
+      "name": "Webhook 5",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        158,
+        74
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "SET_6",
+      "name": "Set 6",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        53,
+        577
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "category",
+              "value": "high"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "IF_7",
+      "name": "IF 7",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        102,
+        161
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "FUNCTION_8",
+      "name": "Function 8",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        213,
+        318
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "SET_9",
+      "name": "Set 9",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        481,
+        591
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "category",
+              "value": "high"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "EMAILSEND_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_2": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_3": {
+      "main": [
+        [
+          {
+            "node": "IF_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_4": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WEBHOOK_5": {
+      "main": [
+        [
+          {
+            "node": "SET_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_6": {
+      "main": [
+        [
+          {
+            "node": "IF_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_7": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_8": {
+      "main": [
+        [
+          {
+            "node": "SET_9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "database-sync",
+    "complexity": "complex",
+    "pattern": "multi_branch"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "America\/New_York"
+  },
+  "meta": {
+    "created": "2024-07-02",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

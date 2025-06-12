@@ -1,0 +1,151 @@
+{
+  "name": "Simple Linear Workflow - Database-Sync 66",
+  "id": "workflow_0066",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        100,
+        100
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "HTTPREQUEST_1",
+      "name": "HTTP Request 1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [
+        300,
+        100
+      ],
+      "parameters": {
+        "url": "https:\/\/api.github.com\/user",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "HTTPREQUEST_2",
+      "name": "HTTP Request 2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        500,
+        100
+      ],
+      "parameters": {
+        "url": "https:\/\/reqres.in\/api\/users",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "HTTPREQUEST_3",
+      "name": "HTTP Request 3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        700,
+        100
+      ],
+      "parameters": {
+        "url": "https:\/\/api.github.com\/user",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "IF_4",
+      "name": "IF 4",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        900,
+        100
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_1": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_2": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_3": {
+      "main": [
+        [
+          {
+            "node": "IF_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "database-sync",
+    "complexity": "simple",
+    "pattern": "linear"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "Asia\/Tokyo"
+  },
+  "meta": {
+    "created": "2024-05-23",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

@@ -1,0 +1,215 @@
+{
+  "name": "Complex Multi-Branch - Webhook-Handling 87",
+  "id": "workflow_0087",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        548,
+        97
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "WEBHOOK_1",
+      "name": "Webhook 1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        278,
+        299
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "EMAILSEND_2",
+      "name": "Send Email 2",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        165,
+        152
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "FUNCTION_3",
+      "name": "Function 3",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        259,
+        394
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "FUNCTION_4",
+      "name": "Function 4",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        776,
+        578
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "SLACK_5",
+      "name": "Slack 5",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        235,
+        419
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "SET_6",
+      "name": "Set 6",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        155,
+        532
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "priority",
+              "value": "pending"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "SET_7",
+      "name": "Set 7",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        402,
+        436
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "priority",
+              "value": "pending"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "EMAILSEND_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_2": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_3": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_4": {
+      "main": [
+        [
+          {
+            "node": "SLACK_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_5": {
+      "main": [
+        [
+          {
+            "node": "SET_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_6": {
+      "main": [
+        [
+          {
+            "node": "SET_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "webhook-handling",
+    "complexity": "complex",
+    "pattern": "multi_branch"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "America\/New_York"
+  },
+  "meta": {
+    "created": "2024-04-03",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

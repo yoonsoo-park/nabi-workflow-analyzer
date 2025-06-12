@@ -1,0 +1,250 @@
+{
+  "name": "Conditional Workflow - Data-Processing 20",
+  "id": "workflow_0020",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        126,
+        253
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "IF_1",
+      "name": "IF 1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        551,
+        260
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "IF_2",
+      "name": "IF 2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        337,
+        102
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "EMAILSEND_3",
+      "name": "Send Email 3",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        604,
+        540
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "SET_4",
+      "name": "Set 4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        558,
+        428
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "status",
+              "value": "processed"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "IF_5",
+      "name": "IF 5",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        220,
+        114
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "IF_6",
+      "name": "IF 6",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        726,
+        138
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "IF_7",
+      "name": "IF 7",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        94,
+        203
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "IF_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_1": {
+      "main": [
+        [
+          {
+            "node": "IF_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ],
+      "false": [
+        [
+          {
+            "node": "EMAILSEND_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_3": {
+      "main": [
+        [
+          {
+            "node": "SET_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_4": {
+      "main": [
+        [
+          {
+            "node": "IF_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_5": {
+      "main": [
+        [
+          {
+            "node": "IF_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_6": {
+      "main": [
+        [
+          {
+            "node": "IF_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "data-processing",
+    "complexity": "medium",
+    "pattern": "conditional"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "Europe\/London"
+  },
+  "meta": {
+    "created": "2024-08-11",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

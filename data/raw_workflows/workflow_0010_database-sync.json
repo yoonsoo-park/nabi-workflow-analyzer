@@ -1,0 +1,218 @@
+{
+  "name": "Complex Multi-Branch - Database-Sync 10",
+  "id": "workflow_0010",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        478,
+        369
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "START_1",
+      "name": "Start 1",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        622,
+        579
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "SLACK_2",
+      "name": "Slack 2",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [
+        418,
+        57
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "HTTPREQUEST_3",
+      "name": "HTTP Request 3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [
+        77,
+        152
+      ],
+      "parameters": {
+        "url": "https:\/\/reqres.in\/api\/users",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "WEBHOOK_4",
+      "name": "Webhook 4",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        283,
+        144
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "IF_5",
+      "name": "IF 5",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        478,
+        479
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "IF_6",
+      "name": "IF 6",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        574,
+        85
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "WEBHOOK_7",
+      "name": "Webhook 7",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        504,
+        433
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "START_1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "SLACK_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_2": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_3": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WEBHOOK_4": {
+      "main": [
+        [
+          {
+            "node": "IF_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_5": {
+      "main": [
+        [
+          {
+            "node": "IF_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_6": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "database-sync",
+    "complexity": "complex",
+    "pattern": "multi_branch"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "America\/New_York"
+  },
+  "meta": {
+    "created": "2024-11-18",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

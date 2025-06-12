@@ -1,0 +1,414 @@
+{
+  "name": "Complex Multi-Branch - Notification 33",
+  "id": "workflow_0033",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        606,
+        145
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "IF_1",
+      "name": "IF 1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        362,
+        543
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "WAIT_2",
+      "name": "Wait 2",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 2,
+      "position": [
+        740,
+        133
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "SLACK_3",
+      "name": "Slack 3",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [
+        622,
+        330
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "WAIT_4",
+      "name": "Wait 4",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 2,
+      "position": [
+        69,
+        499
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "FUNCTION_5",
+      "name": "Function 5",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        337,
+        318
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "EMAILSEND_6",
+      "name": "Send Email 6",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        430,
+        102
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "HTTPREQUEST_7",
+      "name": "HTTP Request 7",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [
+        86,
+        52
+      ],
+      "parameters": {
+        "url": "https:\/\/jsonplaceholder.typicode.com\/posts",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "SET_8",
+      "name": "Set 8",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        438,
+        150
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "status",
+              "value": "pending"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "SLACK_9",
+      "name": "Slack 9",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        307,
+        336
+      ],
+      "parameters": {
+        "channel": "#general",
+        "text": "Hello from n8n!"
+      }
+    },
+    {
+      "id": "IF_10",
+      "name": "IF 10",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        672,
+        195
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "EMAILSEND_11",
+      "name": "Send Email 11",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        510,
+        68
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "GOOGLESHEETS_12",
+      "name": "Google Sheets 12",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 1,
+      "position": [
+        481,
+        535
+      ],
+      "parameters": {
+        "operation": "append",
+        "sheetId": "1234567890",
+        "values": {
+          "A": "={{ $json.name }}",
+          "B": "={{ $json.email }}"
+        }
+      }
+    },
+    {
+      "id": "WEBHOOK_13",
+      "name": "Webhook 13",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        179,
+        226
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "IF_14",
+      "name": "IF 14",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        462,
+        489
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "IF_1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "WAIT_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT_2": {
+      "main": [
+        [
+          {
+            "node": "SLACK_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_3": {
+      "main": [
+        [
+          {
+            "node": "WAIT_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT_4": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_5": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_6": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_7": {
+      "main": [
+        [
+          {
+            "node": "SET_8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_8": {
+      "main": [
+        [
+          {
+            "node": "SLACK_9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SLACK_9": {
+      "main": [
+        [
+          {
+            "node": "IF_10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_10": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EMAILSEND_11": {
+      "main": [
+        [
+          {
+            "node": "GOOGLESHEETS_12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GOOGLESHEETS_12": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WEBHOOK_13": {
+      "main": [
+        [
+          {
+            "node": "IF_14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "notification",
+    "complexity": "complex",
+    "pattern": "multi_branch"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "Asia\/Tokyo"
+  },
+  "meta": {
+    "created": "2024-10-04",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

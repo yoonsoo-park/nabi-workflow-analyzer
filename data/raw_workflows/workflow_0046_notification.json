@@ -1,0 +1,185 @@
+{
+  "name": "Conditional Workflow - Notification 46",
+  "id": "workflow_0046",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        750,
+        80
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "IF_1",
+      "name": "IF 1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        473,
+        536
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "EMAILSEND_2",
+      "name": "Send Email 2",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        463,
+        91
+      ],
+      "parameters": {
+        "toEmail": "user@example.com",
+        "subject": "Notification",
+        "text": "This is a notification from your workflow."
+      }
+    },
+    {
+      "id": "SET_3",
+      "name": "Set 3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        637,
+        355
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "timestamp",
+              "value": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "SET_4",
+      "name": "Set 4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        150,
+        377
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "timestamp",
+              "value": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "IF_5",
+      "name": "IF 5",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        152,
+        283
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "IF_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_1": {
+      "main": [
+        [
+          {
+            "node": "EMAILSEND_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ],
+      "false": [
+        [
+          {
+            "node": "SET_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_3": {
+      "main": [
+        [
+          {
+            "node": "SET_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET_4": {
+      "main": [
+        [
+          {
+            "node": "IF_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "notification",
+    "complexity": "medium",
+    "pattern": "conditional"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "America\/New_York"
+  },
+  "meta": {
+    "created": "2024-03-03",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

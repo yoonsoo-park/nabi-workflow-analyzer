@@ -1,0 +1,216 @@
+{
+  "name": "API Integration - Notification 39",
+  "id": "workflow_0039",
+  "active": false,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        256,
+        361
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "FUNCTION_1",
+      "name": "Function 1",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        554,
+        497
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "HTTPREQUEST_2",
+      "name": "HTTP Request 2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        701,
+        474
+      ],
+      "parameters": {
+        "url": "https:\/\/api.github.com\/user",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "START_3",
+      "name": "Start 3",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 2,
+      "position": [
+        207,
+        55
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "HTTPREQUEST_4",
+      "name": "HTTP Request 4",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        518,
+        394
+      ],
+      "parameters": {
+        "url": "https:\/\/jsonplaceholder.typicode.com\/posts",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "FUNCTION_5",
+      "name": "Function 5",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        764,
+        531
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "FUNCTION_6",
+      "name": "Function 6",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        81,
+        248
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "SET_7",
+      "name": "Set 7",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        573,
+        186
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "status",
+              "value": "high"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_1": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_2": {
+      "main": [
+        [
+          {
+            "node": "START_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_3": {
+      "main": [
+        [
+          {
+            "node": "HTTPREQUEST_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_4": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_5": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_6": {
+      "main": [
+        [
+          {
+            "node": "SET_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "notification",
+    "complexity": "medium",
+    "pattern": "api_integration"
+  },
+  "settings": {
+    "errorWorkflow": null,
+    "timezone": "Europe\/London"
+  },
+  "meta": {
+    "created": "2024-05-12",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}

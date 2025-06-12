@@ -1,0 +1,220 @@
+{
+  "name": "Complex Multi-Branch - Data-Processing 37",
+  "id": "workflow_0037",
+  "active": true,
+  "nodes": [
+    {
+      "id": "START_0",
+      "name": "Start 0",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        251,
+        514
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "WEBHOOK_1",
+      "name": "Webhook 1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        402,
+        177
+      ],
+      "parameters": {
+        "path": "webhook-path",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "HTTPREQUEST_2",
+      "name": "HTTP Request 2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [
+        492,
+        586
+      ],
+      "parameters": {
+        "url": "https:\/\/reqres.in\/api\/users",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application\/json"
+        }
+      }
+    },
+    {
+      "id": "FUNCTION_3",
+      "name": "Function 3",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        684,
+        88
+      ],
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, processed: true } }));"
+      }
+    },
+    {
+      "id": "START_4",
+      "name": "Start 4",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        210,
+        367
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "IF_5",
+      "name": "IF 5",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        515,
+        446
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": "active"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "GOOGLESHEETS_6",
+      "name": "Google Sheets 6",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 1,
+      "position": [
+        478,
+        233
+      ],
+      "parameters": {
+        "operation": "append",
+        "sheetId": "1234567890",
+        "values": {
+          "A": "={{ $json.name }}",
+          "B": "={{ $json.email }}"
+        }
+      }
+    },
+    {
+      "id": "SET_7",
+      "name": "Set 7",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        472,
+        115
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "priority",
+              "value": "active"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "START_0": {
+      "main": [
+        [
+          {
+            "node": "WEBHOOK_1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTPREQUEST_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTPREQUEST_2": {
+      "main": [
+        [
+          {
+            "node": "FUNCTION_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUNCTION_3": {
+      "main": [
+        [
+          {
+            "node": "START_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "START_4": {
+      "main": [
+        [
+          {
+            "node": "IF_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF_5": {
+      "main": [
+        [
+          {
+            "node": "GOOGLESHEETS_6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GOOGLESHEETS_6": {
+      "main": [
+        [
+          {
+            "node": "SET_7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "tags": {
+    "category": "data-processing",
+    "complexity": "complex",
+    "pattern": "multi_branch"
+  },
+  "settings": {
+    "errorWorkflow": "error_handler",
+    "timezone": "Europe\/London"
+  },
+  "meta": {
+    "created": "2024-09-17",
+    "version": "1.0",
+    "generator": "sample_data_generator"
+  },
+  "staticData": {}
+}
