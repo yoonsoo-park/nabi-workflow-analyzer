@@ -376,3 +376,95 @@ if __name__ == '__main__':
         
     finally:
         os.unlink(temp_path)
+
+
+class WorkflowParser:
+    """
+    Main parser class that provides a unified interface for workflow parsing operations.
+    Integrates all parsing functions into a cohesive API for workflow analysis.
+    """
+    
+    def __init__(self, skip_errors: bool = False):
+        """
+        Initialize the workflow parser.
+        
+        Args:
+            skip_errors: If True, skip files that can't be parsed instead of raising errors
+        """
+        self.skip_errors = skip_errors
+        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+    
+    def parse_single(self, file_path: str) -> N8nWorkflow:
+        """
+        Parse a single workflow file.
+        
+        Args:
+            file_path: Path to the workflow JSON file
+            
+        Returns:
+            N8nWorkflow: Parsed workflow object
+            
+        Raises:
+            WorkflowParseError: If file cannot be parsed and skip_errors=False
+        """
+        return parse_single_workflow(file_path)
+    
+    def parse_batch(self, file_paths: List[str]) -> Generator[N8nWorkflow, None, None]:
+        """
+        Parse multiple workflow files using memory-efficient batch processing.
+        
+        Args:
+            file_paths: List of workflow file paths
+            
+        Yields:
+            N8nWorkflow: Parsed workflow objects
+        """
+        return parse_workflows_batch(file_paths, skip_errors=self.skip_errors)
+    
+    def parse_directory(self, directory: str, recursive: bool = True) -> Generator[N8nWorkflow, None, None]:
+        """
+        Parse all workflow files in a directory.
+        
+        Args:
+            directory: Directory path to search for workflow files
+            recursive: Whether to search subdirectories
+            
+        Yields:
+            N8nWorkflow: Parsed workflow objects
+        """
+        file_paths = find_workflow_files(directory, recursive=recursive)
+        self.logger.info(f"Found {len(file_paths)} workflow files in {directory}")
+        
+        return self.parse_batch(file_paths)
+    
+    def get_directory_stats(self, directory: str, recursive: bool = True) -> Dict[str, Any]:
+        """
+        Get statistics about workflow files in a directory without fully parsing them.
+        
+        Args:
+            directory: Directory path to analyze
+            recursive: Whether to search subdirectories
+            
+        Returns:
+            Dict: Statistics about the workflow files
+        """
+        file_paths = find_workflow_files(directory, recursive=recursive)
+        return get_workflow_stats(file_paths)
+    
+    def validate_workflow_file(self, file_path: str) -> Tuple[bool, Optional[str]]:
+        """
+        Validate a single workflow file without full parsing.
+        
+        Args:
+            file_path: Path to the workflow file
+            
+        Returns:
+            Tuple[bool, Optional[str]]: (is_valid, error_message)
+        """
+        try:
+            self.parse_single(file_path)
+            return True, None
+        except WorkflowParseError as e:
+            return False, str(e)
+        except Exception as e:
+            return False, f"Unexpected error: {str(e)}"
